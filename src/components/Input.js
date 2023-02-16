@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { forwardRef, useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { BLACK } from '../colors';
+import { BLACK, GRAY, PRIMARY } from '../colors';
 
 export const ReturnKeyTypes = {
   DONE: 'done',
@@ -31,7 +31,7 @@ const InputTypeProps = {
   },
 };
 
-const Input = forwardRef(({ inputType, ...props }, ref) => {
+const Input = forwardRef(({ inputType, styles, ...props }, ref) => {
   const {
     title,
     placeholder,
@@ -39,11 +39,19 @@ const Input = forwardRef(({ inputType, ...props }, ref) => {
     secureTextEntry,
     iconName: { active, inactive },
   } = InputTypeProps[inputType];
+  const { value } = props;
 
   const [isFocused, setIsFocused] = useState(false);
   return (
-    <View style={defaultStyles.container}>
-      <Text style={defaultStyles.title}>{title}</Text>
+    <View style={[defaultStyles.container, styles?.container]}>
+      <Text
+        style={[
+          defaultStyles.title,
+          { color: value || isFocused ? PRIMARY.DEFAULT : GRAY.DARK },
+        ]}
+      >
+        {title}
+      </Text>
       <View>
         <TextInput
           ref={ref}
@@ -57,7 +65,14 @@ const Input = forwardRef(({ inputType, ...props }, ref) => {
           onBlur={() => {
             setIsFocused(false);
           }}
-          style={[defaultStyles.input]}
+          style={[
+            defaultStyles.input,
+            {
+              borderColor: value || isFocused ? PRIMARY.DEFAULT : GRAY.DARK,
+              color: value || isFocused ? PRIMARY.DEFAULT : GRAY.DARK,
+            },
+            styles?.input,
+          ]}
           textContentType="none"
           autoCapitalize="none"
           autoCorrect={false}
@@ -77,6 +92,8 @@ Input.displayName = 'Input';
 
 Input.propTypes = {
   inputType: PropTypes.oneOf(Object.values(InputTypes)).isRequired,
+  value: PropTypes.string.isRequired,
+  styles: PropTypes.object,
 };
 
 const defaultStyles = StyleSheet.create({
