@@ -5,15 +5,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 
 import Button from '../components/Button';
-import HR from '../components/HR';
-import Input, {
-  InputTypes,
-  keyboardTypes,
-  ReturnKeyTypes,
-} from '../components/Input';
-import SafeInputView from '../components/SafeInputView';
-import TextButton from '../components/TextButton';
+import Input, { ReturnKeyTypes, InputTypes } from '../components/Input';
 import { AuthRoutes } from '../navigations/routes';
+import SafeInputView from '../components/SafeInputView';
+import HR from '../components/HR';
+import TextButton from '../components/TextButton';
 import { WHITE } from '../colors';
 
 const SignInScreen = () => {
@@ -43,7 +39,7 @@ const SignInScreen = () => {
   return (
     <SafeInputView>
       <StatusBar style="light" />
-      <View style={[styles.container, { padding: top }]}>
+      <View style={(StyleSheet.container, { paddingTop: top })}>
         <View style={StyleSheet.absoluteFill}>
           <Image
             source={require('../../assets/cover.png')}
@@ -54,29 +50,22 @@ const SignInScreen = () => {
         <View
           style={[styles.form, { paddingBottom: bottom ? bottom + 10 : 40 }]}
         >
-          <Text>Sign In</Text>
           <Input
             value={email}
-            onChangeText={(text) => {
-              setEmail(text.trim());
-            }}
+            onChangeText={(text) => setEmail(text.trim())}
             inputType={InputTypes.EMAIL}
             returnKeyType={ReturnKeyTypes.NEXT}
-            onSubmitEditing={() => {
-              passwordRef.current.focus();
-            }}
-            styles={{ container: { marginBottom: 20 } }}
+            onSubmitEditing={() => passwordRef.current.focus()}
+            style={{ container: { marginBottom: 20 } }}
           />
           <Input
             ref={passwordRef}
             value={password}
-            onChangeText={(text) => {
-              setPassword(text.trim());
-            }}
-            inputType={InputTypes.PASSWRD}
+            onChangeText={(text) => setPassword(text.trim())}
+            inputType={InputTypes.PASSWORD}
             returnKeyType={ReturnKeyTypes.DONE}
             onSubmitEditing={onSubmit}
-            styles={{ container: { marginBottom: 20 } }}
+            style={{ container: { marginBottom: 20 } }}
           />
           <Button
             title="로그인"
@@ -84,19 +73,13 @@ const SignInScreen = () => {
             disabled={disabled}
             isLoading={isLoading}
             styles={{
-              container: {
-                marginBottom: 20,
-              },
+              container: { marginTop: 20 },
             }}
           />
-
-          <HR text={'OR'} styles={{ container: { marginVertical: 30 } }}></HR>
-
+          <HR text={'OR'} styles={{ container: { marginVertical: 30 } }} />
           <TextButton
             title={'회원가입'}
-            onPress={() => {
-              navigation.navigate(AuthRoutes.SIGN_UP);
-            }}
+            onPress={() => navigation.navigate(AuthRoutes.SIGN_UP)}
           />
         </View>
       </View>
@@ -117,11 +100,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
-});
-
-const InputStyles = StyleSheet.create({
-  container: { marginBottom: 20, paddingHorizontal: 20 },
-  input: { borderWidth: 1 },
 });
 
 export default SignInScreen;
