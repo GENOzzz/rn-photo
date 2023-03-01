@@ -39,7 +39,7 @@ const SignInScreen = () => {
   return (
     <SafeInputView>
       <StatusBar style="light" />
-      <View style={(StyleSheet.container, { paddingTop: top })}>
+      <View style={[styles.container, { paddingTop: top }]}>
         <View style={StyleSheet.absoluteFill}>
           <Image
             source={require('../../assets/cover.png')}
