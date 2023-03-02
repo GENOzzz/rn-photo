@@ -32,10 +32,6 @@ const SignUpScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
 
-  useEffect(() => {
-    setDisabled(!email || !password || password !== passwordConfirm);
-  }, [email, password, passwordConfirm]);
-
   const onSubmit = () => {
     Keyboard.dismiss();
     if (!disabled && !isLoading) {
