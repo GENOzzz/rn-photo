@@ -9,22 +9,23 @@ const CountTypes = {
 const reducer = (state, action) => {
   switch (action.type) {
     case CountTypes.INCREMENT:
-      return state + 1;
+      state.count = state.count + 1;
+      return state;
     case CountTypes.DECREMENT:
-      return state - 1;
+      return { count: state.count - 1 };
     default:
       return state;
   }
 };
 
-const initState = 0;
+const initState = { count: 0 };
 
 const ReducerTest = () => {
   const [result, dispatch] = useReducer(reducer, initState);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{result}</Text>
+      <Text style={styles.text}>{result.count}</Text>
 
       <Button
         title="+"
